@@ -485,7 +485,8 @@ static int gpst_parse_config_xml(struct openconnect_info *vpninfo, xmlNode *xml_
 			int sec = atoi(s);
 			vpn_progress(vpninfo, PRG_INFO, _("Tunnel timeout (rekey interval) is %d minutes.\n"), sec/60);
 			vpninfo->ssl_times.last_rekey = time(NULL);
-			vpninfo->ssl_times.rekey = sec - 60;
+			  // HACK(awg): rekey every 2 hours.
+			vpninfo->ssl_times.rekey = 7200; //sec - 60;
 			vpninfo->ssl_times.rekey_method = REKEY_TUNNEL;
 		} else if (!xmlnode_get_val(xml_node, "gw-address", &s)) {
 			/* As remarked in oncp.c, "this is a tunnel; having a
